@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenses Revision - Sparky's Rescue Mission</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #FFB703;
+      --primary-dark: #FB8500;
+      --secondary: #023047;
+      --accent: #219EBC;
+      --light-bg: #8ECAE6;
+      --light-card: #FFFFFF;
+      --success: #2A9D8F;
+      --danger: #E76F51;
+      --warning: #F4A261;
+      --shadow: 0 8px 24px rgba(2, 48, 71, 0.15);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #023047 0%, #124e66 50%, #219EBC 100%);
+      min-height: 100vh;
+      color: #023047;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 950px;
+      background: #f8fafc;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      overflow: hidden;
+      position: relative;
+      border: 4px solid #FFB703;
+    }
+
+    /* Top Bar */
+    .top-header {
+      background: var(--secondary);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 4px solid var(--primary);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-area h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.8rem;
+      color: #FFB703;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .player-badge {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .page {
+      display: none;
+      padding: 30px;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Utility Cards */
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+      border: 2px solid #e2e8f0;
+    }
+
+    /* Front Screen */
+    .front-hero {
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .sparky-avatar-lg {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 15px auto;
+      filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.2));
+      animation: floatSparky 3s ease-in-out infinite;
+    }
+
+    @keyframes floatSparky {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(2deg); }
+    }
+
+    .title-banner {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.8rem;
+      color: #023047;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 0px #FFB703;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #475569;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      max-width: 480px;
+      margin: 0 auto 20px auto;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--secondary);
+      font-size: 1rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 2.5px solid #cbd5e1;
+      font-size: 1.05rem;
+      font-weight: 700;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-dark);
+      box-shadow: 0 0 0 4px rgba(251, 133, 0, 0.2);
+    }
+
+    .btn-main {
+      background: linear-gradient(180deg, #FFB703 0%, #FB8500 100%);
+      color: #023047;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.4rem;
+      padding: 16px 42px;
+      border: none;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 6px 0px #b35900, 0 10px 20px rgba(0,0,0,0.15);
+      transition: all 0.15s ease;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0px #b35900, 0 14px 25px rgba(0,0,0,0.2);
+    }
+
+    .btn-main:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0px #b35900, 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Journey Map Bar */
+    .map-container {
+      background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 100%);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 24px;
+      border: 2px solid #7dd3fc;
+      position: relative;
+    }
+
+    .map-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .map-title {
+      font-weight: 900;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+    }
+
+    .map-track {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      padding: 10px 10px 0 10px;
+    }
+
+    .map-line {
+      position: absolute;
+      top: 28px;
+      left: 30px;
+      right: 30px;
+      height: 6px;
+      background: #93c5fd;
+      z-index: 1;
+    }
+
+    .map-progress-line {
+      position: absolute;
+      top: 28px;
+      left: 30px;
+      height: 6px;
+      background: #FB8500;
+      z-index: 2;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .map-step {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #64748b;
+      position: relative;
+      z-index: 3;
+      transition: all 0.3s;
+    }
+
+    .map-step.active {
+      border-color: #FB8500;
+      background: #FFB703;
+      color: #023047;
+      transform: scale(1.15);
+      box-shadow: 0 0 12px rgba(251, 133, 0, 0.5);
+    }
+
+    .map-step.completed {
+      background: #2A9D8F;
+      border-color: #1d7066;
+      color: white;
+    }
+
+    .friend-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #f472b6;
+      border: 3px solid #db2777;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Question Screen Layout */
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .diff-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .diff-easy { background: #d1fae5; color: #047857; }
+    .diff-medium { background: #fef3c7; color: #b45309; }
+    .diff-hard { background: #fee2e2; color: #b91c1c; }
+
+    .timer-box {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.2rem;
+      color: var(--secondary);
+      background: #e2e8f0;
+      padding: 6px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      border: 2px solid #e2e8f0;
+      margin-bottom: 20px;
+    }
+
+    .q-type-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #64748b;
+      margin-bottom: 8px;
+      letter-spacing: 0.8px;
+    }
+
+    .q-sentence {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .time-marker-tag {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #bae6fd;
+      margin-bottom: 15px;
+    }
+
+    /* Options */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+
+    .opt-btn {
+      background: #f8fafc;
+      border: 2.5px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .opt-btn:hover {
+      background: #f1f5f9;
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .opt-btn.selected {
+      border-color: #FB8500;
+      background: #fff7ed;
+    }
+
+    .opt-btn.correct {
+      background: #d1fae5 !important;
+      border-color: #10b981 !important;
+      color: #047857 !important;
+    }
+
+    .opt-btn.wrong {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+
+    /* Feedback & Explanation Box */
+    .explanation-box {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+      display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .explanation-box.show { display: block; }
+    .explanation-box.wrong-bg {
+      background: #fef2f2;
+      border-color: #fca5a5;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .expl-header {
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .expl-header.correct-text { color: #15803d; }
+    .expl-header.wrong-text { color: #b91c1c; }
+
+    .expl-body {
+      font-size: 0.98rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    /* Action bar */
+    .action-bar {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Results Screen */
+    .results-hero {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFB703, #FB8500);
+      color: #023047;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 10px 25px rgba(251, 133, 0, 0.4);
+      border: 4px solid white;
+    }
+
+    .score-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2.8rem;
+      line-height: 1;
+    }
+
+    .score-total {
+      font-weight: 800;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+    }
+
+    .stat-val {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+
+    .stat-lbl {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    /* Hall of fame table */
+    .hof-section {
+      margin-top: 25px;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .hof-title-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .hof-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      color: var(--secondary);
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.95rem;
+    }
+
+    th {
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    td { font-weight: 700; color: #1e293b; }
+
+    tr.highlight-me {
+      background: #fef3c7;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn-sec {
+      background: #023047;
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      padding: 12px 26px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .btn-sec:hover { background: #124e66; }
+
+    /* Printable Mistake Sheet */
+    .mistake-list {
+      text-align: left;
+      margin-top: 15px;
+    }
+
+    .mistake-item {
+      background: #fff5f5;
+      border-left: 4px solid #ef4444;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 0 10px 10px 0;
+    }
+
+    .mistake-q {
+      font-weight: 800;
+      font-size: 1rem;
+      color: #991b1b;
+      margin-bottom: 6px;
+    }
+
+    .mistake-ans {
+      font-size: 0.9rem;
+      color: #334155;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .app-container { border: none; box-shadow: none; width: 100%; max-width: 100%; }
+      .top-header, .btn-group, .hof-section, .score-circle, .stats-grid, .map-container { display: none !important; }
+      .page { display: block !important; padding: 0; }
+      .mistake-report-print { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <div class="top-header">
+      <div class="logo-area">
+        <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="45" fill="#FFB703"/>
+          <path d="M45 20 L25 55 L48 55 L40 85 L75 42 L52 42 Z" fill="#023047"/>
+        </svg>
+        <h1>Tenses Revision</h1>
+      </div>
+      <div class="player-badge" id="playerDisplay">
+        <span>⚡ Ready Player</span>
+      </div>
+    </div>
+
+    <!-- PAGE 1: SETUP SCREEN -->
+    <div id="pageSetup" class="page active">
+      <div class="front-hero">
+        <!-- Cute Sparky Animated SVG -->
+        <div class="sparky-avatar-lg">
+          <svg viewBox="0 0 200 200" width="100%" height="100%">
+            <!-- Sparky Tail -->
+            <path d="M140 110 L175 80 L160 105 L190 75 L150 130 Z" fill="#FFB703" stroke="#023047" stroke-width="4" stroke-linejoin="round"/>
+            <!-- Sparky Body -->
+            <ellipse cx="100" cy="125" rx="55" ry="50" fill="#FFB703" stroke="#023047" stroke-width="5"/>
+            <!-- Sparky Feet -->
+            <ellipse cx="70" cy="170" rx="16" ry="10" fill="#FB8500" stroke="#023047" stroke-width="4"/>
+            <ellipse cx="130" cy="170" rx="16" ry="10" fill="#FB8500" stroke="#023047" stroke-width="4"/>
+            <!-- Sparky Ears -->
+            <polygon points="50,80 15,20 65,50" fill="#FFB703" stroke="#023047" stroke-width="5" stroke-linejoin="round"/>
+            <polygon points="15,20 30,38 50,80" fill="#023047"/>
+            <polygon points="150,80 185,20 135,50" fill="#FFB703" stroke="#023047" stroke-width="5" stroke-linejoin="round"/>
+            <polygon points="185,20 170,38 150,80" fill="#023047"/>
+            <!-- Sparky Head -->
+            <circle cx="100" cy="90" r="48" fill="#FFB703" stroke="#023047" stroke-width="5"/>
+            <!-- Cheeks -->
+            <circle cx="68" cy="105" r="11" fill="#E76F51"/>
+            <circle cx="132" cy="105" r="11" fill="#E76F51"/>
+            <!-- Eyes -->
+            <ellipse cx="80" cy="88" rx="7" ry="10" fill="#023047"/>
+            <circle cx="78" cy="85" r="3" fill="#FFF"/>
+            <ellipse cx="120" cy="88" rx="7" ry="10" fill="#023047"/>
+            <circle cx="118" cy="85" r="3" fill="#FFF"/>
+            <!-- Nose & Mouth -->
+            <polygon points="100,96 97,93 103,93" fill="#023047"/>
+            <path d="M92 103 Q100 112 108 103" fill="none" stroke="#023047" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <h2 class="title-banner">Sparky's Rescue Mission</h2>
+        <p class="subtitle">15 Questions • Progressive Difficulty • Save Friend Luna!</p>
+
+        <div class="card" style="max-width: 520px; margin: 0 auto 25px auto;">
+          <div class="form-group">
+            <label for="playerName">Enter Your Name:</label>
+            <input type="text" id="playerName" class="form-control" placeholder="e.g. Alex Wong" maxlength="20">
+          </div>
+
+          <div class="form-group">
+            <label for="playerClass">Select Your Class:</label>
+            <select id="playerClass" class="form-control">
+              <option value="DS4E">DS4E</option>
+              <option value="DS4I">DS4I</option>
+              <option value="DS4V">DS4V</option>
+              <option value="DS4T">DS4T</option>
+              <option value="DS4Y">DS4Y</option>
+              <option value="DS4R">DS4R</option>
+              <option value="DS5V">DS5V</option>
+              <option value="DS5E">DS5E</option>
+              <option value="DS5R">DS5R</option>
+              <option value="DS5I">DS5I</option>
+              <option value="DS5T">DS5T</option>
+              <option value="DS5Y">DS5Y</option>
+            </select>
+          </div>
+
+          <button class="btn-main" onclick="startGame()">Start Quest! ⚡</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2: GAMEPLAY SCREEN -->
+    <div id="pageGame" class="page">
+      <!-- Journey Map Bar -->
+      <div class="map-container">
+        <div class="map-title-row">
+          <div class="map-title">
+            <span>🗺️ Sparky's Route to Luna</span>
+          </div>
+          <div style="font-size:0.85rem; font-weight:800; color:#0284c7;" id="progressText">Question 1 of 15</div>
+        </div>
+        <div class="map-track">
+          <div class="map-line"></div>
+          <div class="map-progress-line" id="mapProgressLine"></div>
+          
+          <!-- 15 Node Dots -->
+          <div class="map-step active" id="node1">1</div>
+          <div class="map-step" id="node2">2</div>
+          <div class="map-step" id="node3">3</div>
+          <div class="map-step" id="node4">4</div>
+          <div class="map-step" id="node5">5</div>
+          <div class="map-step" id="node6">6</div>
+          <div class="map-step" id="node7">7</div>
+          <div class="map-step" id="node8">8</div>
+          <div class="map-step" id="node9">9</div>
+          <div class="map-step" id="node10">10</div>
+          <div class="map-step" id="node11">11</div>
+          <div class="map-step" id="node12">12</div>
+          <div class="map-step" id="node13">13</div>
+          <div class="map-step" id="node14">14</div>
+
+          <div class="friend-icon" id="node15" title="Luna">
+            <svg width="24" height="24" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="#FFD1DC"/>
+              <circle cx="35" cy="45" r="5" fill="#000"/>
+              <circle cx="65" cy="45" r="5" fill="#000"/>
+              <path d="M40 65 Q50 75 60 65" stroke="#000" stroke-width="4" fill="none"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level & Timer Header -->
+      <div class="game-header">
+        <div class="diff-badge diff-easy" id="diffBadge">Level 1: Foundation</div>
+        <div class="timer-box">
+          <span>⏱️</span> <span id="timerDisplay">00:00</span>
+        </div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="question-card">
+        <div class="q-type-title" id="qTypeTitle">Multiple Choice Challenge</div>
+        <div class="q-sentence" id="qSentence">Loading question...</div>
+        <div class="time-marker-tag" id="timeMarkerTag">
+          <span>⏰ Time Marker:</span> <strong id="timeMarkerValue">since 2021</strong>
+        </div>
+
+        <!-- Options Container -->
+        <div class="options-grid" id="optionsGrid">
+          <!-- Dynamically inserted options -->
+        </div>
+
+        <!-- Feedback / Grammar Explanation -->
+        <div class="explanation-box" id="explanationBox">
+          <div class="expl-header" id="explHeader">
+            <span>💡 Grammar Rule Explanation</span>
+          </div>
+          <div class="expl-body" id="explBody">
+            Explanation text goes here...
+          </div>
+        </div>
+
+        <!-- Next / Continue Action -->
+        <div class="action-bar">
+          <button class="btn-main" id="btnNext" style="display:none;" onclick="nextQuestion()">Next Question ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3: RESULTS & MISTAKE REPORT -->
+    <div id="pageResult" class="page">
+      <div class="results-hero">
+        <!-- Rescued Sparky & Luna SVG -->
+        <div style="width: 140px; height: 110px; margin: 0 auto 10px auto;">
+          <svg viewBox="0 0 200 120" width="100%" height="100%">
+            <!-- Sparky Left -->
+            <circle cx="60" cy="60" r="35" fill="#FFB703" stroke="#023047" stroke-width="4"/>
+            <circle cx="48" cy="55" r="5" fill="#023047"/>
+            <circle cx="72" cy="55" r="5" fill="#023047"/>
+            <path d="M52 70 Q60 78 68 70" fill="none" stroke="#023047" stroke-width="3"/>
+            <!-- Luna Right (Saved Friend) -->
+            <circle cx="140" cy="60" r="35" fill="#f472b6" stroke="#023047" stroke-width="4"/>
+            <circle cx="128" cy="55" r="5" fill="#023047"/>
+            <circle cx="152" cy="55" r="5" fill="#023047"/>
+            <path d="M132 70 Q140 78 148 70" fill="none" stroke="#023047" stroke-width="3"/>
+            <!-- Hearts -->
+            <path d="M100 30 Q100 20 90 20 Q80 20 80 32 Q80 45 100 58 Q120 45 120 32 Q120 20 110 20 Q100 20 100 30 Z" fill="#ef4444"/>
+          </svg>
+        </div>
+
+        <h2 class="title-banner" style="font-size: 2.2rem;">Mission Complete!</h2>
+        <p class="subtitle" id="resultSubtitle">You saved Luna and mastered English Tenses!</p>
+
+        <div class="score-circle">
+          <div class="score-num" id="scoreNum">15</div>
+          <div class="score-total">/ 15 Correct</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-val" id="statAccuracy">100%</div>
+            <div class="stat-lbl">Accuracy</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="statTime">02:15</div>
+            <div class="stat-lbl">Time Taken</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val" id="statRank">Master</div>
+            <div class="stat-lbl">Grammar Rank</div>
+          </div>
+        </div>
+
+        <!-- Printable Mistake Report Box -->
+        <div class="card" id="mistakeReportCard" style="display:none;">
+          <h3 style="color:#b91c1c; font-family:'Fredoka One', cursive; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+            <span>📝 Mistake Recap Report</span>
+          </h3>
+          <p style="font-size:0.9rem; color:#64748b; margin-bottom:15px;">Review your missed questions and rule explanations below before retrying:</p>
+          <div class="mistake-list" id="mistakeList"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+          <button class="btn-main" onclick="restartGame()">Play Again 🔄</button>
+          <button class="btn-sec" onclick="window.print()">Print Report 🖨️</button>
+        </div>
+
+        <!-- Class Leaderboard / Hall of Fame -->
+        <div class="hof-section">
+          <div class="hof-title-bar">
+            <div class="hof-title">🏆 Class Leaderboard</div>
+            <div>
+              <select id="leaderboardFilter" class="form-control" style="padding: 6px 12px; font-size: 0.85rem;" onchange="renderLeaderboard()">
+                <option value="ALL">All Classes</option>
+                <option value="DS4E">DS4E</option>
+                <option value="DS4I">DS4I</option>
+                <option value="DS4V">DS4V</option>
+                <option value="DS4T">DS4T</option>
+                <option value="DS4Y">DS4Y</option>
+                <option value="DS4R">DS4R</option>
+                <option value="DS5V">DS5V</option>
+                <option value="DS5E">DS5E</option>
+                <option value="DS5R">DS5R</option>
+                <option value="DS5I">DS5I</option>
+                <option value="DS5T">DS5T</option>
+                <option value="DS5Y">DS5Y</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th>Class</th>
+                  <th>Score</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody">
+                <!-- Dynamically Populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ------------------------------------------------------------------
+    // QUESTION BANK (15 Questions Organized into 3 Progressive Levels)
+    // ------------------------------------------------------------------
+    const QUESTION_BANK = [
+      // --- LEVEL 1: FOUNDATION (Q1 - Q5) ---
+      {
+        id: 1,
+        level: 1,
+        levelLabel: "Level 1: Foundation",
+        type: "Fill in the Blank",
+        sentence: "Sparky _______ English grammar every evening to prepare for the test.",
+        timeMarker: "every evening",
+        options: ["studies", "is studying", "has studied", "studied"],
+        correct: 0,
+        explanation: "<b>Present Simple Tense</b> is used for daily habits or routines. The time signal <i>'every evening'</i> indicates a recurring regular action."
+      },
+      {
+        id: 2,
+        level: 1,
+        levelLabel: "Level 1: Foundation",
+        type: "Multiple Choice",
+        sentence: "Look at those dark clouds! It _______ rain very soon.",
+        timeMarker: "Look at those dark clouds / very soon",
+        options: ["will", "is going to", "has rained", "was raining"],
+        correct: 1,
+        explanation: "<b>Be going to</b> is used for predictions based on present visual evidence (dark clouds in the sky)."
+      },
+      {
+        id: 3,
+        level: 1,
+        levelLabel: "Level 1: Foundation",
+        type: "Multiple Choice",
+        sentence: "Our class teacher _______ the dynamic grammar module two days ago.",
+        timeMarker: "two days ago",
+        options: ["has completed", "completed", "completes", "had completed"],
+        correct: 1,
+        explanation: "<b>Past Simple Tense</b> is required because <i>'two days ago'</i> specifies a completed action at a definite past time."
+      },
+      {
+        id: 4,
+        level: 1,
+        levelLabel: "Level 1: Foundation",
+        type: "Fill in the Blank",
+        sentence: "Luna and her friends _______ in the school hall right now.",
+        timeMarker: "right now",
+        options: ["rehearse", "are rehearsing", "have rehearsed", "were rehearsing"],
+        correct: 1,
+        explanation: "<b>Present Continuous Tense</b> is used for actions happening at the moment of speaking (<i>'right now'</i>)."
+      },
+      {
+        id: 5,
+        level: 1,
+        levelLabel: "Level 1: Foundation",
+        type: "Multiple Choice",
+        sentence: "I think our team _______ the inter-school relay match tomorrow.",
+        timeMarker: "I think / tomorrow",
+        options: ["is winning", "wins", "will win", "won"],
+        correct: 2,
+        explanation: "<b>Will + Verb Base</b> is used for predictions based on personal opinions or beliefs (triggered by <i>'I think'</i>)."
+      },
+
+      // --- LEVEL 2: INTERMEDIATE COMPLEX (Q6 - Q10) ---
+      {
+        id: 6,
+        level: 2,
+        levelLabel: "Level 2: Intermediate Complex",
+        type: "Multiple Choice",
+        sentence: "The researchers _______ in the laboratory since 8 o'clock this morning without taking a break.",
+        timeMarker: "since 8 o'clock this morning",
+        options: ["worked", "are working", "have been working", "had worked"],
+        correct: 2,
+        explanation: "<b>Present Perfect Continuous</b> (or Present Perfect) emphasizes an action that started in the past with <i>'since'</i> and continues up to the present."
+      },
+      {
+        id: 7,
+        level: 2,
+        levelLabel: "Level 2: Intermediate Complex",
+        type: "Sentence Transformation",
+        sentence: "While the students _______ their comprehension exercise, the fire alarm suddenly rang.",
+        timeMarker: "While ... suddenly",
+        options: ["wrote", "were writing", "have written", "had written"],
+        correct: 1,
+        explanation: "<b>Past Continuous Tense</b> (<i>were writing</i>) expresses an ongoing longer action interrupted by a shorter action in Past Simple (<i>rang</i>)."
+      },
+      {
+        id: 8,
+        level: 2,
+        levelLabel: "Level 2: Intermediate Complex",
+        type: "Multiple Choice",
+        sentence: "By the time the rescue team arrived at the peak, the lost hikers _______ for over five hours.",
+        timeMarker: "By the time (Past Simple)",
+        options: ["walked", "have walked", "had been walking", "were walking"],
+        correct: 2,
+        explanation: "<b>Past Perfect Continuous</b> (<i>had been walking</i>) shows an ongoing action completed before another past event (<i>by the time arrived</i>)."
+      },
+      {
+        id: 9,
+        level: 2,
+        levelLabel: "Level 2: Intermediate Complex",
+        type: "Proofreading Challenge",
+        sentence: "Find the error: 'Since 2021, our school <u>opened</u> three new computer laboratories.'",
+        timeMarker: "Since 2021",
+        options: ["has opened", "was opening", "had opened", "opens"],
+        correct: 0,
+        explanation: "The time marker <i>'Since 2021'</i> connects past time to present, requiring <b>Present Perfect Tense</b> (<i>has opened</i>) instead of Past Simple."
+      },
+      {
+        id: 10,
+        level: 2,
+        levelLabel: "Level 2: Intermediate Complex",
+        type: "Multiple Choice",
+        sentence: "Mr. Chan _______ secondary students for 15 years so far.",
+        timeMarker: "for 15 years so far",
+        options: ["taught", "has taught", "is teaching", "had taught"],
+        correct: 1,
+        explanation: "<b>Present Perfect Tense</b> (<i>has taught</i>) is used with duration markers like <i>'for 15 years so far'</i> extending to the present."
+      },
+
+      // --- LEVEL 3: ADVANCED PROOFREADING & TENSE SHIFTS (Q11 - Q15) ---
+      {
+        id: 11,
+        level: 3,
+        levelLabel: "Level 3: Advanced Challenge",
+        type: "Proofreading Challenge",
+        sentence: "Identify correction: 'Before Sparky reached the final gate, the dragon <u>already locked</u> the door.'",
+        timeMarker: "Before (Past Simple) ... already",
+        options: ["has already locked", "had already locked", "was already locking", "is already locking"],
+        correct: 1,
+        explanation: "When two actions happened in the past, the earlier completed action requires <b>Past Perfect Tense</b> (<i>had already locked</i>)."
+      },
+      {
+        id: 12,
+        level: 3,
+        levelLabel: "Level 3: Advanced Challenge",
+        type: "Complex Structure",
+        sentence: "Unless the weather improves by noon, the outdoor sports festival _______ until next month.",
+        timeMarker: "Unless (Present Simple) ... by noon",
+        options: ["postponed", "will be postponed", "has postponed", "was postponed"],
+        correct: 1,
+        explanation: "In First Conditional sentences with <i>'Unless + Present Simple'</i>, the main clause uses <b>Future Simple Passive</b> (<i>will be postponed</i>)."
+      },
+      {
+        id: 13,
+        level: 3,
+        levelLabel: "Level 3: Advanced Challenge",
+        type: "Proofreading Challenge",
+        sentence: "Spot the mistake: 'While I <u>have browsed</u> the library catalog yesterday, I found a rare book.'",
+        timeMarker: "While ... yesterday",
+        options: ["was browsing", "am browsing", "had browsed", "browse"],
+        correct: 0,
+        explanation: "<i>'While'</i> indicating a continuous past action requires <b>Past Continuous</b> (<i>was browsing</i>), not Present Perfect."
+      },
+      {
+        id: 14,
+        level: 3,
+        levelLabel: "Level 3: Advanced Challenge",
+        type: "Multi-clause Tense Shift",
+        sentence: "By next October, the engineering team _______ the cross-harbor tunnel extension.",
+        timeMarker: "By next October",
+        options: ["will finish", "will have finished", "finishes", "has finished"],
+        correct: 1,
+        explanation: "<b>Future Perfect Tense</b> (<i>will have finished</i>) expresses an action that will be completed prior to a specific future point (<i>'By next October'</i>)."
+      },
+      {
+        id: 15,
+        level: 3,
+        levelLabel: "Level 3: Advanced Challenge",
+        type: "Proofreading Challenge",
+        sentence: "Identify correction: 'The principal announced that all classes <u>will start</u> ten minutes earlier yesterday.'",
+        timeMarker: "announced (Past) ... yesterday",
+        options: ["would start", "have started", "are starting", "will have started"],
+        correct: 0,
+        explanation: "In reported speech with a past reporting verb (<i>announced</i>), future modal <i>will</i> shifts to past modal <b>would</b>."
+      }
+    ];
+
+    // ------------------------------------------------------------------
+    // GAME STATE VARIABLES
+    // ------------------------------------------------------------------
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let playerName = "";
+    let playerClass = "DS4E";
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let userAnswers = []; // Records { qIndex, selectedIndex, isCorrect }
+
+    // Mock initial leaderboard data
+    let leaderboard = [
+      { name: "Chloe Cheung", class: "DS4E", score: 15, time: "01:45" },
+      { name: "Ryan Lau", class: "DS4I", score: 14, time: "02:10" },
+      { name: "Kaiser Wong", class: "DS5V", score: 15, time: "02:05" },
+      { name: "Anson Lee", class: "DS4T", score: 13, time: "02:30" }
+    ];
+
+    // ------------------------------------------------------------------
+    // GAME CONTROLLER FUNCTIONS
+    // ------------------------------------------------------------------
+    function startGame() {
+      const nameInput = document.getElementById("playerName").value.trim();
+      if (!nameInput) {
+        alert("Please enter your name to start Sparky's quest!");
+        return;
+      }
+
+      playerName = nameInput;
+      playerClass = document.getElementById("playerClass").value;
+
+      document.getElementById("playerDisplay").innerHTML = `⚡ ${playerName} (${playerClass})`;
+
+      // Reset state
+      currentQuestionIndex = 0;
+      score = 0;
+      secondsElapsed = 0;
+      userAnswers = [];
+
+      // Switch screen
+      showPage("pageGame");
+
+      // Start Timer
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+        const secs = String(secondsElapsed % 60).padStart(2, '0');
+        document.getElementById("timerDisplay").innerText = `${mins}:${secs}`;
+      }, 1000);
+
+      loadQuestion(currentQuestionIndex);
+    }
+
+    function loadQuestion(index) {
+      const q = QUESTION_BANK[index];
+
+      // Update Map Progress
+      updateMapUI(index);
+
+      // Update Difficulty Badge
+      const diffBadge = document.getElementById("diffBadge");
+      diffBadge.innerText = q.levelLabel;
+      if (q.level === 1) {
+        diffBadge.className = "diff-badge diff-easy";
+      } else if (q.level === 2) {
+        diffBadge.className = "diff-badge diff-medium";
+      } else {
+        diffBadge.className = "diff-badge diff-hard";
+      }
+
+      // Update Question Info
+      document.getElementById("progressText").innerText = `Question ${index + 1} of 15`;
+      document.getElementById("qTypeTitle").innerText = q.type;
+      document.getElementById("qSentence").innerHTML = q.sentence;
+      document.getElementById("timeMarkerValue").innerText = q.timeMarker;
+
+      // Hide Explanation Box & Next Button
+      const explBox = document.getElementById("explanationBox");
+      explBox.className = "explanation-box";
+      explBox.style.display = "none";
+      document.getElementById("btnNext").style.display = "none";
+
+      // Render Options
+      const optionsGrid = document.getElementById("optionsGrid");
+      optionsGrid.innerHTML = "";
+
+      q.options.forEach((opt, optIdx) => {
+        const btn = document.createElement("button");
+        btn.className = "opt-btn";
+        btn.innerHTML = `<span>${String.fromCharCode(65 + optIdx)}. ${opt}</span>`;
+        btn.onclick = () => handleAnswer(optIdx);
+        optionsGrid.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(selectedIndex) {
+      const q = QUESTION_BANK[currentQuestionIndex];
+      const buttons = document.querySelectorAll(".opt-btn");
+
+      // Disable further clicks
+      buttons.forEach(btn => btn.style.pointerEvents = "none");
+
+      const isCorrect = (selectedIndex === q.correct);
+      if (isCorrect) {
+        score++;
+        buttons[selectedIndex].classList.add("correct");
+      } else {
+        buttons[selectedIndex].classList.add("wrong");
+        buttons[q.correct].classList.add("correct");
+      }
+
+      // Record User Answer
+      userAnswers.push({
+        question: q,
+        selectedIndex: selectedIndex,
+        isCorrect: isCorrect
+      });
+
+      // Show Grammar Explanation Box
+      const explBox = document.getElementById("explanationBox");
+      const explHeader = document.getElementById("explHeader");
+      const explBody = document.getElementById("explBody");
+
+      if (isCorrect) {
+        explBox.className = "explanation-box show";
+        explHeader.className = "expl-header correct-text";
+        explHeader.innerHTML = "<span>✨ Excellent! Correct Answer</span>";
+      } else {
+        explBox.className = "explanation-box wrong-bg show";
+        explHeader.className = "expl-header wrong-text";
+        explHeader.innerHTML = "<span>💡 Grammar Rule Recap</span>";
+      }
+
+      explBody.innerHTML = q.explanation;
+      document.getElementById("btnNext").style.display = "inline-block";
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < QUESTION_BANK.length) {
+        loadQuestion(currentQuestionIndex);
+      } else {
+        finishGame();
+      }
+    }
+
+    function updateMapUI(currentIndex) {
+      const percent = (currentIndex / 14) * 100;
+      document.getElementById("mapProgressLine").style.width = `${percent}%`;
+
+      for (let i = 1; i <= 15; i++) {
+        const node = document.getElementById(`node${i}`);
+        if (!node) continue;
+
+        if (i - 1 < currentIndex) {
+          node.className = "map-step completed";
+          node.innerText = "✓";
+        } else if (i - 1 === currentIndex) {
+          node.className = "map-step active";
+          node.innerText = i;
+        } else {
+          node.className = "map-step";
+          node.innerText = i;
+        }
+      }
+    }
+
+    function finishGame() {
+      clearInterval(timerInterval);
+
+      // Format Time
+      const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+      const secs = String(secondsElapsed % 60).padStart(2, '0');
+      const timeStr = `${mins}:${secs}`;
+
+      // Calculate Stats
+      const accuracy = Math.round((score / 15) * 100);
+
+      document.getElementById("scoreNum").innerText = score;
+      document.getElementById("statAccuracy").innerText = `${accuracy}%`;
+      document.getElementById("statTime").innerText = timeStr;
+
+      // Grammar Rank
+      let rank = "Apprentice";
+      if (score === 15) rank = "Master 🏆";
+      else if (score >= 12) rank = "Expert ⭐";
+      else if (score >= 9) rank = "Scholar 📖";
+      document.getElementById("statRank").innerText = rank;
+
+      // Add to Leaderboard
+      leaderboard.unshift({
+        name: playerName,
+        class: playerClass,
+        score: score,
+        time: timeStr
+      });
+
+      renderMistakeReport();
+      renderLeaderboard();
+      showPage("pageResult");
+    }
+
+    function renderMistakeReport() {
+      const card = document.getElementById("mistakeReportCard");
+      const list = document.getElementById("mistakeList");
+      list.innerHTML = "";
+
+      const mistakes = userAnswers.filter(a => !a.isCorrect);
+
+      if (mistakes.length === 0) {
+        card.style.display = "none";
+        document.getElementById("resultSubtitle").innerText = "Flawless Victory! You answered all 15 questions correctly!";
+      } else {
+        card.style.display = "block";
+        document.getElementById("resultSubtitle").innerText = `Great effort! Review your ${mistakes.length} mistake(s) below to master every tense!`;
+
+        mistakes.forEach((m, idx) => {
+          const div = document.createElement("div");
+          div.className = "mistake-item";
+          div.innerHTML = `
+            <div class="mistake-q">Question ${m.question.id}: ${m.question.sentence}</div>
+            <div class="mistake-ans">
+              ❌ Your Answer: <span style="color:#b91c1c; font-weight:700;">${m.question.options[m.selectedIndex]}</span><br>
+              ✅ Correct Answer: <span style="color:#15803d; font-weight:800;">${m.question.options[m.question.correct]}</span>
+            </div>
+            <div style="font-size:0.85rem; color:#475569; margin-top:6px; background:#fff; padding:8px; border-radius:6px; border:1px solid #fee2e2;">
+              💡 <b>Explanation:</b> ${m.question.explanation}
+            </div>
+          `;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    function renderLeaderboard() {
+      const filter = document.getElementById("leaderboardFilter").value;
+      const tbody = document.getElementById("leaderboardBody");
+      tbody.innerHTML = "";
+
+      const filtered = (filter === "ALL") ? leaderboard : leaderboard.filter(item => item.class === filter);
+
+      filtered.forEach((entry, idx) => {
+        const tr = document.createElement("tr");
+        if (entry.name === playerName && entry.class === playerClass) {
+          tr.className = "highlight-me";
+        }
+        tr.innerHTML = `
+          <td>#${idx + 1}</td>
+          <td>${entry.name}</td>
+          <td>${entry.class}</td>
+          <td>${entry.score} / 15</td>
+          <td>${entry.time}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function restartGame() {
+      showPage("pageSetup");
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+      document.getElementById(pageId).classList.add("active");
+    }
+  </script>
+</body>
+</html>
